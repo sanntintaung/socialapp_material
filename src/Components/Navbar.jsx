@@ -27,6 +27,7 @@ const useStyles = makeStyles( theme => ({
         '&:hover': {
             backgroundColor: alpha(theme.palette.common.white, 0.25),
         },
+        paddingLeft:theme.spacing(1),
         borderRadius:theme.shape.borderRadius,
         width:'50%',
         [theme.breakpoints.down('sm')]:{
@@ -68,7 +69,7 @@ const Navbar = () => {
     const [open,setOpen] = useState(false);
     const classes = useStyles({open});
     return (
-        <AppBar>
+        <AppBar position="fixed">
             <Toolbar className={classes.toolbar}>
                 <Typography variant="h6" className={classes.logoLg}>
                     Genensis
