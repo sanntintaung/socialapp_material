@@ -7,10 +7,11 @@ import {
     FormLabel,
     MenuItem,
     Modal, Radio,
-    RadioGroup,
+    RadioGroup, Snackbar,
     TextField,
     Tooltip
 } from "@material-ui/core";
+import MuiAlert from '@material-ui/lab/Alert';
 import { Add as AddIcon } from "@material-ui/icons";
 import {makeStyles} from "@material-ui/core";
 
@@ -51,9 +52,27 @@ const useStyles = makeStyles( theme => ({
 
 }));
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const Add = () => {
     const [open, setOpen] = useState(false);
+    const [alert,setAlert] = useState(false);
     const classes = useStyles();
+
+    const handleClick = () => {
+        setAlert(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setAlert(false);
+    };
+
     return (
         <div>
             <Tooltip title="Add" aria-label="add">
@@ -106,7 +125,11 @@ const Add = () => {
                             </FormControl>
                         </div>
                         <div className={classes.item}>
-                            <Button variant="contained" color="primary" component="span" size="small" className={classes.buttons}>
+                            <Button variant="contained" color="primary" component="span" size="small" className={classes.buttons}
+                            onClick={ () => {
+                                setOpen(false);
+                                setAlert(true);
+                            }}>
                                 Upload
                             </Button>
                             <Button variant="outlined" color="secondary" size="small" className={classes.buttons}
@@ -117,6 +140,11 @@ const Add = () => {
                     </form>
                 </Container>
             </Modal>
+            <Snackbar open={alert} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClick} severity="success">
+                    This is a success message!
+                </Alert>
+            </Snackbar>
         </div>
     );
 };
